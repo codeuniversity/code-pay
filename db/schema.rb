@@ -14,8 +14,10 @@ ActiveRecord::Schema.define(version: 20171109114451) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
+  enable_extension "pgcrypto"
 
-  create_table "collections", force: :cascade do |t|
+  create_table "collections", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.bigint "user_id"
     t.datetime "created_at", null: false
@@ -23,19 +25,19 @@ ActiveRecord::Schema.define(version: 20171109114451) do
     t.index ["user_id"], name: "index_collections_on_user_id"
   end
 
-  create_table "items", force: :cascade do |t|
+  create_table "items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.decimal "price", precision: 15, scale: 2
     t.integer "amount"
-    t.bigint "collection_id"
+    t.uuid "collection_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["collection_id"], name: "index_items_on_collection_id"
   end
 
-  create_table "transactions", force: :cascade do |t|
-    t.integer "amount"
-    t.bigint "item_id"
+  create_table "transactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "amount", default: 1
+    t.uuid "item_id"
     t.bigint "user_id"
     t.integer "status", default: 0
     t.datetime "created_at", null: false
