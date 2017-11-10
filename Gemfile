@@ -43,3 +43,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'active_model_serializers'
 gem 'devise_token_auth'
 gem 'omniauth-google-oauth2'
+gem 'paperclip'
+gem 'sidekiq'
+gem 'aws-sdk', '~> 2.3'
