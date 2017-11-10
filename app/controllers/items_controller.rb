@@ -1,5 +1,6 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /items
   def index
@@ -16,6 +17,11 @@ class ItemsController < ApplicationController
   # POST /items
   def create
     @item = Item.new(item_params)
+
+    if @item.collection && @item.collection.user != @current_user
+      render json: {error:'you may not add an item to a foreign collection'}, status: 401
+      return
+    end
 
     if @item.save
       render json: @item, status: :created, location: @item

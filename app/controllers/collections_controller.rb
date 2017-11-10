@@ -1,5 +1,6 @@
 class CollectionsController < ApplicationController
   before_action :set_collection, only: [:show, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /collections
   def index
@@ -16,7 +17,7 @@ class CollectionsController < ApplicationController
   # POST /collections
   def create
     @collection = Collection.new(collection_params)
-
+    @collection.user = @current_user
     if @collection.save
       render json: @collection, status: :created, location: @collection
     else
