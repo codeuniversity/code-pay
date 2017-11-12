@@ -1,5 +1,5 @@
 class ItemSerializer < ActiveModel::Serializer
   attributes :id, :name, :price, :amount
-  has_one :collection
+  belongs_to :collection
   has_one :image
 end

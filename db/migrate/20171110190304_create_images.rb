@@ -4,7 +4,7 @@ class CreateImages < ActiveRecord::Migration[5.1]
       t.string :tmp_url
       t.uuid :imageable_id
       t.string :imageable_type
-
+      t.boolean :processed, default: false
       t.timestamps
     end
   end

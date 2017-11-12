@@ -34,6 +34,18 @@ module CodePay
       g.orm :active_record, primary_key_type: :uuid
     end
 
+    Paperclip.options[:content_type_mappings] = { png: "application/octet-stream" }
+
+    config.paperclip_defaults = {
+      storage: :s3,
+      s3_credentials: {
+        bucket: ENV.fetch('S3_BUCKET_NAME'),
+        access_key_id: ENV.fetch('AWS_ACCESS_KEY_ID'),
+        secret_access_key: ENV.fetch('AWS_SECRET_ACCESS_KEY'),
+        s3_region: ENV.fetch('AWS_REGION'),
+      }
+    }
+
     config.middleware.insert_after ActiveRecord::Migration::CheckPending, ActionDispatch::Cookies
     config.middleware.insert_after ActionDispatch::Cookies, ActionDispatch::Session::CookieStore
     end

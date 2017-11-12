@@ -29,17 +29,19 @@ class ImagesController < ApplicationController
 
   # GET /signed_image_url
   def signed_image_url
-    filename = params[:filename]
-    if !filename
-      render json: {error:'No filename specified'},status:422
-      return
-    end
+    # filename = params[:filename]
+    # if !filename
+    #   render json: {error:'No filename specified'},status:422
+    #   return
+    # end
     options = {
       key: "uploads/#{SecureRandom.uuid}/${filename}",
       success_action_status: '201',
-      acl: 'public-read'
+      acl: 'public-read',
+      # content_type_starts_with: ''
     }
     presigned_post = S3_TEMP_BUCKET.presigned_post(options)
+    # byebug
     if presigned_post
       render plain: { presignedPost: { fields: presigned_post.fields, url: presigned_post.url } }.to_json, status: 200, content_type: 'application/json'
     else

@@ -18,9 +18,8 @@ class ItemsController < ApplicationController
   def create
     @item = Item.new(item_params)
 
-    if @item.collection && @item.collection.user != @current_user
-      render json: {error:'you may not add an item to a foreign collection'}, status: 401
-      return
+    if @item.collection && @item.user != @current_user
+      render json: {error:'you may not add an item to a foreign collection'}, status: 403 and return
     end
 
     if @item.save
@@ -32,6 +31,10 @@ class ItemsController < ApplicationController
 
   # PATCH/PUT /items/1
   def update
+    if @item.user != @current_user
+      render json: {error:'you may not update an item of a foreign collection'}, status: 403 and return
+    end
+
     if @item.update(item_params)
       render json: @item
     else
@@ -41,6 +44,9 @@ class ItemsController < ApplicationController
 
   # DELETE /items/1
   def destroy
+    if @item.user != @current_user
+      render json: {error:'you may not delete an item of a foreign collection'}, status: 403 and return
+    end
     @item.destroy
   end
 

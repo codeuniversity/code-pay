@@ -1,23 +1,24 @@
+AWS_PREFIX = 'https://code-pay-development.s3.amazonaws.com/'
 class ImageSerializer < ActiveModel::Serializer
   attributes :id, :thumb, :small, :large, :original
 
   def thumb
-    object.image.url(:thumb)
+    object.processed ? AWS_PREFIX + object.image.path(:thumb) : nil
   end
 
   def small
-    object.image.url(:small)
+    object.processed ? AWS_PREFIX + object.image.path(:small) : nil
   end
 
   def medium
-    object.image.url(:medium)
+    object.processed ? AWS_PREFIX + object.image.path(:medium) : nil
   end
 
   def large
-    object.image.url(:large)
+    object.processed ? AWS_PREFIX + object.image.path(:large) : nil
   end
 
   def original
-    object.image.url(:original)
+    object.processed ? AWS_PREFIX + object.image.path(:original) : nil
   end
 end

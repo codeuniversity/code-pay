@@ -27,6 +27,9 @@ class CollectionsController < ApplicationController
 
   # PATCH/PUT /collections/1
   def update
+    if @collection.user != @current_user
+      render json: {error:'you may not update a foreign collection'}, status: 403 and return
+    end
     if @collection.update(collection_params)
       render json: @collection
     else
@@ -36,6 +39,9 @@ class CollectionsController < ApplicationController
 
   # DELETE /collections/1
   def destroy
+    if @collection.user != @current_user
+      render json: {error:'you may not destroy a foreign collection'}, status: 403 and return
+    end
     @collection.destroy
   end
 
