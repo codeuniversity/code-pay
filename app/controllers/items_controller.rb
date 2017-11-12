@@ -4,8 +4,11 @@ class ItemsController < ApplicationController
 
   # GET /items
   def index
-    @items = Item.all
-
+    if @collection
+      @items = @collection.items
+    else
+      @items = Item.all
+    end
     render json: @items
   end
 
@@ -16,9 +19,13 @@ class ItemsController < ApplicationController
 
   # POST /items
   def create
-    @item = Item.new(item_params)
+    if @collection
+      @item = @collection.items.new(item_params)
+    else
+      @item = Item.new(item_params)
+    end
 
-    if @item.collection && @item.user != @current_user
+    if @item.collection && @item.collection.user != @current_user
       render json: {error:'you may not add an item to a foreign collection'}, status: 403 and return
     end
 

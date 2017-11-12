@@ -4,7 +4,11 @@ class ImagesController < ApplicationController
 
   # POST /images
   def create
-    @image = Image.new(image_params)
+    if @imageable
+      @image = @imageable.images.new(image_params)
+    else
+      @image = Image.new(image_params)
+    end
 
     if @image.save
       render json: @image, status: :created, location: @image
@@ -29,11 +33,6 @@ class ImagesController < ApplicationController
 
   # GET /signed_image_url
   def signed_image_url
-    # filename = params[:filename]
-    # if !filename
-    #   render json: {error:'No filename specified'},status:422
-    #   return
-    # end
     options = {
       key: "uploads/#{SecureRandom.uuid}/${filename}",
       success_action_status: '201',
