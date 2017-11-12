@@ -8,4 +8,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable,
     :rememberable, :trackable, :omniauthable
   include DeviseTokenAuth::Concerns::User
+
+  def outstanding_money
+    transactions.joins(:item).sum('transactions.amount * items.price').to_f
+  end
+
 end
