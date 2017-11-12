@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   resources :images, only: [:create, :update, :destroy]
   get 'signed_image_url', to: 'images#signed_image_url'
   resources :transactions, except: [:update, :destroy]
-  resources :items
+  resources :items, except: :index
   resources :collections do
     resources :images, module: 'collections', only: [:create, :index]
     resources :items, module: 'collections', only: [:create, :index]

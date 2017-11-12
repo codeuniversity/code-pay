@@ -2,16 +2,6 @@ class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :update, :destroy]
   before_action :authenticate_user!
 
-  # GET /items
-  def index
-    if @collection
-      @items = @collection.items
-    else
-      @items = Item.all
-    end
-    render json: @items
-  end
-
   # GET /items/1
   def show
     render json: @item

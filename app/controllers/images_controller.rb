@@ -9,7 +9,7 @@ class ImagesController < ApplicationController
     else
       @image = Image.new(image_params)
     end
-
+    @image.user = @current_user
     if @image.save
       render json: @image, status: :created, location: @image
     else
