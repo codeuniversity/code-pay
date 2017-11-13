@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
 
   def outstanding_money
-    transactions.joins(:item).sum('transactions.amount * items.price').to_f
+    transactions.where(status: :outstanding).joins(:item).sum('transactions.amount * items.price').to_f
   end
   def outstanding_transactions
     transactions.where(status: :outstanding)

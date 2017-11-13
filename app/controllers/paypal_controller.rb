@@ -55,11 +55,12 @@ class PaypalController < ApplicationController
 
     def fulfill_transactions(payment)
         payment.transactions.each do |transaction|
-            # byebug
             transaction.item_list.items.each do |item|
-                byebug
                 t = Transaction.find(item.sku)
                 t.status = 'done'
+                receiver = t.receiver
+                receiver.balance += t.cost
+                receiver.save
                 t.save
             end
         end
