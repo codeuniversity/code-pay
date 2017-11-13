@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     resources :items, module: 'collections', only: [:create, :index]
   end
   mount_devise_token_auth_for 'User', at: 'auth'
-
+  post 'paypal/create', to: 'paypal#create_payment'
+  post 'paypal/execute', to: 'paypal#execute_payment'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

@@ -45,4 +45,11 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+
+  PayPal::SDK.configure(
+    :mode => "sandbox", # "sandbox" or "live"
+    :client_id => ENV.fetch('PAYPAL_CLIENT_ID'),
+    :client_secret => ENV.fetch('PAYPAL_CLIENT_SECRET'),
+    :ssl_options => { } )
+
 end

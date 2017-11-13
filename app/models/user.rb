@@ -12,5 +12,10 @@ class User < ActiveRecord::Base
   def outstanding_money
     transactions.joins(:item).sum('transactions.amount * items.price').to_f
   end
-
+  def outstanding_transactions
+    transactions.where(status: :outstanding)
+  end
+  def has_outstanding_transactions
+    transactions.where(status: :outstanding).any?
+  end
 end

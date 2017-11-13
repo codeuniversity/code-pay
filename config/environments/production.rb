@@ -80,4 +80,12 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  PayPal::SDK.configure(
+    :mode => "live", # "sandbox" or "live"
+    :client_id => ENV.fetch('PAYPAL_CLIENT_ID'),
+    :client_secret => ENV.fetch('PAYPAL_CLIENT_SECRET'),
+    :ssl_options => { } )
+
+
 end
