@@ -64,6 +64,8 @@ AWS_SECRET_ACCESS_KEY='<Your AWS Secret Access Key>'
 AWS_REGION='<your bucket location, i.e. "eu-central-1" for Frankfurt>'
 S3_BUCKET_NAME='<Your permanent S3 Bucket Name>'
 S3_TEMP_BUCKET_NAME='<Your temporary S3 Bucket Name (the one with expiration turned on)>'
+PAYPAL_CLIENT_ID='<Your Paypal Client Id>'
+PAYPAL_CLIENT_SECRET='<Your Paypal Client Secret>'
 ```
 ### Run the server
 * run the rails server
