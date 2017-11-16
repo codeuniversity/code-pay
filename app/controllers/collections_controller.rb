@@ -4,7 +4,7 @@ class CollectionsController < ApplicationController
 
   # GET /collections
   def index
-    @collections = Collection.all
+    @collections = Collection.where(public: true)
 
     render json: @collections
   end
