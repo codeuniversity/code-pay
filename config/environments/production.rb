@@ -82,7 +82,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   PayPal::SDK.configure(
-    :mode => "live", # "sandbox" or "live"
+    :mode => ENV.fetch('PAYPAL_ENVIRONMENT'), # "sandbox" or "live"
     :client_id => ENV.fetch('PAYPAL_CLIENT_ID'),
     :client_secret => ENV.fetch('PAYPAL_CLIENT_SECRET'),
     :ssl_options => { } )
