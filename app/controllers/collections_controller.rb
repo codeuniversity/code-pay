@@ -4,8 +4,12 @@ class CollectionsController < ApplicationController
 
   # GET /collections
   def index
-    @collections = Collection.where(public: true)
-
+    mine = params[:mine] || false
+    if mine
+      @collections = @current_user.collections.order(created_at: :desc)
+    else
+      @collections = Collection.where(public: true)
+    end
     render json: @collections
   end
 
