@@ -60,8 +60,10 @@ class PaypalController < ApplicationController
                 t.status = 'done'
                 receiver = t.receiver
                 receiver.balance += t.cost
-                receiver.save
-                t.save
+                Transaction.transaction do
+                    receiver.save!
+                    t.save!
+                end
             end
         end
     end
