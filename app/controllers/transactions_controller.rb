@@ -27,10 +27,11 @@ class TransactionsController < ApplicationController
   def pay
     render json: { balance: "you dont have enough to pay" },status: :unprocessable_entity and return if @current_user.balance < @transaction.cost
     render json: { status: "you dont want to pay for a transaction, that was already paid" }, status: :unprocessable_entity and return if @transaction.status == "done"
-    receiver = @transaction.receiver
+
     User.transaction do
       @current_user.balance -= @transaction.cost
       @current_user.save!
+      receiver = @transaction.receiver
       receiver.balance += @transaction.cost
       receiver.save!
       @transaction.status = 'done'
