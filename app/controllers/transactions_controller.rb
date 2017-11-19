@@ -30,10 +30,10 @@ class TransactionsController < ApplicationController
     receiver = @transaction.receiver
     User.transaction do
       @current_user.balance -= @transaction.cost
-      receiver.balance += @transaction.cost
-      @transaction.status = 'done'
-      receiver.save!
       @current_user.save!
+      receiver.balance += @transaction.cost
+      receiver.save!
+      @transaction.status = 'done'
       @transaction.save!
     end
     render json: @transaction
